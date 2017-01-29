@@ -23,11 +23,9 @@ def softmax(x):
                   tensor in this problem.
     """
 
-    x_max = tf.reduce_max(x, 1, keep_dims=True)
-    x = x - x_max
-    x_exp = tf.exp(x)
-    x_sum = tf.reduce_sum(x_exp, 1, keep_dims=True)
-    out = x_exp / x_sum
+    ### YOUR CODE HERE
+    ### END YOUR CODE
+
     return out
 
 
@@ -54,10 +52,10 @@ def cross_entropy_loss(y, yhat):
         out:  tf.Tensor with shape (1,) (Scalar output). You need to construct this
                     tensor in the problem.
     """
-    log_yhat = tf.log(yhat)
-    y_yhat_product = tf.to_float(y) * log_yhat
-    row_loss = tf.reduce_sum(y_yhat_product, 1)
-    out = -tf.reduce_sum(row_loss)
+
+    ### YOUR CODE HERE
+    ### END YOUR CODE
+
     return out
 
 
