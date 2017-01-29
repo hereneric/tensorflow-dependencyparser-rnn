@@ -1,0 +1,6 @@
+*.pyc
+*.conll
+*.txt
+*~
+.idea/
+.DS_Store
