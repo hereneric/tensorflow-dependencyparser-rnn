@@ -72,18 +72,27 @@ def minibatch_parse(sentences, model, batch_size):
                       Ordering should be the same as in sentences (i.e., dependencies[i] should
                       contain the parse for sentences[i]).
     """
+    length = len(sentences)
     partial_parses = [PartialParse(sent) for sent in sentences]
+    dependencies = [0] * length
     unfinished_parses = partial_parses
-    dependencies = []
+    indices = range(length)
     while len(unfinished_parses) != 0:
         minibatch = unfinished_parses[0:batch_size]
         transitions = model.predict(minibatch)
-        for i in xrange(len(minibatch)):
+        # print >> sys.stderr, str(len(minibatch))
+        for i in reversed(xrange(len(minibatch))):
             pp = minibatch[i]
+            #remove import sys
+            # print >> sys.stderr, 'i=' + str(i)
+            # print >> sys.stderr, 'stack' + str(pp.stack)
+            # print >> sys.stderr, 'stack' + str(pp.buffer)
+            # print >> sys.stderr, 'stack' + str(transitions[i])
             pp.parse_step(transitions[i])
             if len(pp.stack) == 1:
+                dependencies[indices[i]] = pp.dependencies
                 unfinished_parses.pop(i)
-                dependencies.append(pp.dependencies)
+                indices.pop(i)
     return dependencies
 
 
