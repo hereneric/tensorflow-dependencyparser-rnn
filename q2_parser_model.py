@@ -130,11 +130,8 @@ class ParserModel(Model):
         Returns:
             pred: tf.Tensor of shape (batch_size, n_classes)
         """
-
-        ##delete sys
         with tf.variable_scope('NN') as scope:
             x = self.add_embedding()
-            # print >> sys.stderr, x
             xavier_initializer = xavier_weight_init()
             W_shape = (self.config.n_features*self.config.embed_size, self.config.hidden_size)
             U_shape = (self.config.hidden_size, self.config.n_classes)
@@ -160,9 +157,7 @@ class ParserModel(Model):
         Returns:
             loss: A 0-d tensor (scalar)
         """
-        ### YOUR CODE HERE
         loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, self.labels_placeholder))
-        ### END YOUR CODE
         return loss
 
     def add_training_op(self, loss):
@@ -184,10 +179,8 @@ class ParserModel(Model):
         Returns:
             train_op: The Op for training.
         """
-        ### YOUR CODE HERE
         optimizer = tf.train.AdamOptimizer(0.001)
         train_op = optimizer.minimize(loss)
-        ### END YOUR CODE
         return train_op
 
     def train_on_batch(self, sess, inputs_batch, labels_batch):
