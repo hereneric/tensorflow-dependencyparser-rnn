@@ -80,14 +80,8 @@ def minibatch_parse(sentences, model, batch_size):
     while len(unfinished_parses) != 0:
         minibatch = unfinished_parses[0:batch_size]
         transitions = model.predict(minibatch)
-        # print >> sys.stderr, str(len(minibatch))
         for i in reversed(xrange(len(minibatch))):
             pp = minibatch[i]
-            #remove import sys
-            # print >> sys.stderr, 'i=' + str(i)
-            # print >> sys.stderr, 'stack' + str(pp.stack)
-            # print >> sys.stderr, 'stack' + str(pp.buffer)
-            # print >> sys.stderr, 'stack' + str(transitions[i])
             pp.parse_step(transitions[i])
             if len(pp.stack) == 1:
                 dependencies[indices[i]] = pp.dependencies
